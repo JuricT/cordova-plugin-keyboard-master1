@@ -44,7 +44,7 @@ Keyboard.returnKeyType = function(hide) {
 
 Keyboard.updateContent = function(hide) {
    // alert("return key");
-    exec(null, null, "Keyboard", "updateContent", ["updateContent",hide]);
+    //exec(null, null, "Keyboard", "updateContent", ["updateContent",hide]);
 };
 
 
