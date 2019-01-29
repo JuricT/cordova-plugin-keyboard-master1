@@ -351,16 +351,16 @@ static IMP WKOriginalImp;
 {
     if (_shrinkView && _keyboardIsVisible) {
       if (@available(iOS 12, *)) { 
-       // 
+        CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
+        [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+      } else {
+        // 
        CGFloat maxY = scrollView.contentSize.height - scrollView.bounds.size.height;
         if (scrollView.bounds.origin.y > maxY) {
             scrollView.bounds = CGRectMake(scrollView.bounds.origin.x, maxY,
                                            scrollView.bounds.size.width, scrollView.bounds.size.height);
         }
-      //
-      } else {
-          CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
-          [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+       //         
       }
     } 
 }
