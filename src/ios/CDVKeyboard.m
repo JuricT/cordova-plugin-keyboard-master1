@@ -328,7 +328,9 @@ static IMP WKOriginalImp;
         }
         */
         screen.size.height -= keyboardIntersection.size.height;
-        self.keyboardHeight = keyboardIntersection.size.height;
+        if (@available(iOS 12, *)) {
+            self.keyboardHeight = keyboardIntersection.size.height;
+        }
         //self.webView.scrollView.scrollEnabled = NO;
         self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
     }
