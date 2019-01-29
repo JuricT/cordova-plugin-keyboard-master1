@@ -350,14 +350,17 @@ static IMP WKOriginalImp;
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
     if (_shrinkView && _keyboardIsVisible) {
-       /* CGFloat maxY = scrollView.contentSize.height - scrollView.bounds.size.height;
+      if (@available(iOS 12, *)) { 
+       // 
+       CGFloat maxY = scrollView.contentSize.height - scrollView.bounds.size.height;
         if (scrollView.bounds.origin.y > maxY) {
             scrollView.bounds = CGRectMake(scrollView.bounds.origin.x, maxY,
                                            scrollView.bounds.size.width, scrollView.bounds.size.height);
         }
-      */
-     CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
-     [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+      //
+      } else {
+          CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
+          [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
     } 
 }
 
