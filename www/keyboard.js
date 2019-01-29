@@ -42,6 +42,12 @@ Keyboard.returnKeyType = function(hide) {
     exec(null, null, "Keyboard", "returnKeyType", ["returnKeyType",hide]);
 };
 
+Keyboard.updateContent = function(hide) {
+   // alert("return key");
+    exec(null, null, "Keyboard", "updateContent", ["updateContent",hide]);
+};
+
+
 Keyboard.disableScrollingInShrinkView = function(disable) {
     exec(null, null, "Keyboard", "disableScrollingInShrinkView", [disable]);
 };
