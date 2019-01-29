@@ -371,7 +371,7 @@ static IMP WKOriginalImp;
 
 - (void)shrinkView:(CDVInvokedUrlCommand*)command
 {
-    if (command.arguments.count > 0) {
+    
     id value = [command.arguments objectAtIndex:0];
     if (!([value isKindOfClass:[NSNumber class]])) {
         value = [NSNumber numberWithBool:NO];
@@ -382,11 +382,7 @@ static IMP WKOriginalImp;
         // Scroll webview content to bottom
         CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
         [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
-      }
-    }
- 
- [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:self.shrinkView]
-                                callbackId:command.callbackId];
+     }
 }
 
 - (void)disableScrollingInShrinkView:(CDVInvokedUrlCommand*)command
