@@ -37,45 +37,11 @@
 }
 
 #pragma mark Initialize
-- (void)updateContent:(CDVInvokedUrlCommand *)command {
- 
-      CGRect screen = [[UIScreen mainScreen] bounds];
-    //CGRect screen = [[[UIApplication sharedApplication] keyWindow] frame];
-    CGRect statusBar = [[UIApplication sharedApplication] statusBarFrame];
-   // CGRect keyboard = ((NSValue*)notif.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
-
-    // Work within the webview's coordinate system
-    CGRect keyboard = [self.webView convertRect:keyboard fromView:nil];
-    statusBar = [self.webView convertRect:statusBar fromView:nil];
-    screen = [self.webView convertRect:screen fromView:nil];
-    CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
-    if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
-        // I'm sure there's a better way...
-        if (@available(iOS 12, *)) {
-            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView; // Order intentionally swapped.
-            screen.size.height -= keyboardIntersection.size.height;
-
-            CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height - keyboard.size.height);
-            //CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height + keyboard.size.height);
-            self.webView.scrollView.contentSize = revisedSize;
-        }
-        else {
-            screen.size.height -= keyboardIntersection.size.height;
-            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
-        }
-    }
-        
-}
 - (void)returnKeyType:(CDVInvokedUrlCommand *)command {
     NSString* echo = [command.arguments objectAtIndex:0];
     NSString* returnKeyType = [command.arguments objectAtIndex:1];
   if([echo isEqualToString:@"returnKeyType"]) {
         IMP darkImp = imp_implementationWithBlock(^(id _s) {
-           //return UIKeyboardAppearanceDark;
-           //return UIReturnKeyDone;
-           //return UIReturnKeyTypeSend;
-         //if([returnKeyType isEqualToString:@"send"])
-          //  return UIReturnKeySend;
          if([returnKeyType isEqualToString:@"go"]) {
             return UIReturnKeyGo;
          } else if([returnKeyType isEqualToString:@"google"]) {
@@ -182,122 +148,6 @@
  
   
     self.webView.scrollView.delegate = self;
- /*
-   // NSString* echo = [command.arguments objectAtIndex:0];
-   NSString* returnKeyType = @"go";
-  //if([echo isEqualToString:@"returnKeyType"]) {
-        IMP darkImp = imp_implementationWithBlock(^(id _s) {
-           //return UIKeyboardAppearanceDark;
-           //return UIReturnKeyDone;
-           //return UIReturnKeyTypeSend;
-         //if([returnKeyType isEqualToString:@"send"])
-          //  return UIReturnKeySend;
-         if([returnKeyType isEqualToString:@"go"]) {
-            return UIReturnKeyGo;
-         } else if([returnKeyType isEqualToString:@"google"]) {
-            return UIReturnKeyGoogle;
-         } else if([returnKeyType isEqualToString:@"join"]) {
-            return UIReturnKeyJoin;
-         } else if([returnKeyType isEqualToString:@"next"]) {
-            return UIReturnKeyNext;
-         } else if([returnKeyType isEqualToString:@"route"]) {
-            return UIReturnKeyRoute;
-         } else if([returnKeyType isEqualToString:@"search"]) {
-            return UIReturnKeySearch;
-         } else if([returnKeyType isEqualToString:@"send"]) {
-            return UIReturnKeySend;
-         } else if([returnKeyType isEqualToString:@"yahoo"]) {
-            return UIReturnKeyYahoo;
-         } else if([returnKeyType isEqualToString:@"done"]) {
-            return UIReturnKeyDone;
-         } else if([returnKeyType isEqualToString:@"emergencycall"]) {
-            return UIReturnKeyEmergencyCall;
-         }
-         return UIReturnKeyDefault;
-       });
-    for (NSString* classString in @[@"UIWebBrowserView", @"UITextInputTraits"]) {
-        Class c = NSClassFromString(classString);
-       // Method m = class_getInstanceMethod(c, @selector(keyboardAppearance));
-      Method m = class_getInstanceMethod(c, @selector(returnKeyType));
-        if (m != NULL) {
-            method_setImplementation(m, darkImp);
-        } else {
-          //  class_addMethod(c, @selector(keyboardAppearance), darkImp, "l@:");
-           class_addMethod(c, @selector(returnKeyType), darkImp, "l@:");
-        }
-    }*/
-    //}
-  // [self returnKeyType];
-  // setting = @"returnKeyType";
-   // if ([self settingForKey:setting]) {
-  // if([echo isEqualToString:@"returnKeyType"]) {
-  /*      IMP darkImp = imp_implementationWithBlock(^(id _s) {
-         return UIReturnKeyDefault;
-       });
-    for (NSString* classString in @[@"UIWebBrowserView", @"UITextInputTraits"]) {
-        Class c = NSClassFromString(classString);
-       // Method m = class_getInstanceMethod(c, @selector(keyboardAppearance));
-      Method m = class_getInstanceMethod(c, @selector(returnKeyType));
-        if (m != NULL) {
-            method_setImplementation(m, darkImp);
-        } else {
-          //  class_addMethod(c, @selector(keyboardAppearance), darkImp, "l@:");
-           class_addMethod(c, @selector(returnKeyType), darkImp, "l@:");
-        }
-    }*/
-    //}
- 
- /*    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *currentDate = [NSDate date];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setYear:3];
-    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-    [comps setYear:-3];
-    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-    
-   UIDatePicker *datePicker = [[UIDatePicker alloc]init];
- 
-    [datePicker setMaximumDate:maxDate];
-    [datePicker setMinimumDate:minDate];
-    */
- 
-/* NSDateComponents *dateDelta = [[NSDateComponents alloc] init];
-[dateDelta setDay:0];
-[dateDelta setHour:1];
-[dateDelta setMinute:30];
-NSDate *maximumDate = [calendar dateByAddingComponents:dateDelta toDate:currentDate options:0];*/
-//[self.datePicker setMaximumDate:maximumDate];
-/* 
-  NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *currentDate = [NSDate date];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setYear:3];
-    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-    [comps setYear:-3];
-    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-    
- 
-   IMP darkImp = imp_implementationWithBlock(^(id _s) {
-         return currentDate;
-   });
-    for (NSString* classString in @[@"UIWebBrowserView", @"UITextInputTraits"]) {
-        Class c = NSClassFromString(classString);
-       // Method m = class_getInstanceMethod(c, @selector(keyboardAppearance));
-      Method m = class_getInstanceMethod(c, @selector(maximumDate));
-        if (m != NULL) {
-            method_setImplementation(m, darkImp);
-        } else {
-          //  class_addMethod(c, @selector(keyboardAppearance), darkImp, "l@:");
-           class_addMethod(c, @selector(maximumDate), darkImp, "l@:");
-        }
-    }
- */
-   // [UIDatePicker setMaximumDate:maxDate];
-   // [UIDatePicker setMinimumDate:minDate];
- 
-  // [datePicker setMaximumDate:maxDate];
-  // [datePicker setMinimumDate:minDate];
- 
  
 }
 
@@ -346,27 +196,6 @@ NSDate *maximumDate = [calendar dateByAddingComponents:dateDelta toDate:currentD
         [pickerView.superview setValue:hundredYearsAgo forKey:@"maximumDate"];
         [pickerView.superview setValue:prevYears forKey:@"minimumDate"];
      
-    
-     
-       /* UIToolbar *toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
-        [toolBar setBarStyle:UIBarStyleBlackOpaque];
-        UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
-        style:UIBarButtonItemStyleBordered target:self action:@selector(changeDateFromLabel:)];
-        toolBar.items = @[barButtonDone];
-       barButtonDone.tintColor=[UIColor blackColor];
-       [pickerView addSubview:toolBar];*/
-   /*  
-     UIToolbar* keyboardToolbar = [[UIToolbar alloc] init];
-[keyboardToolbar sizeToFit];
-UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc]
-                                  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                  target:nil action:nil];
-UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc]
-                                  initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                  target:self action:@selector(yourTextViewDoneButtonPressed)];
-keyboardToolbar.items = @[flexBarButton, doneBarButton];
-      [pickerView addSubview:keyboardToolbar];
-     */
      
     }
 }
@@ -375,27 +204,6 @@ keyboardToolbar.items = @[flexBarButton, doneBarButton];
 {
        //if ([uiView isKindOfClass:[UIPickerView class]] ){
         if ([uiView isKindOfClass:objc_getClass("_UIDatePickerView")] || [uiView isKindOfClass:objc_getClass("UIDatePickerView")]) {
-           // return (UIDatePicker*) uiView;
-           // [(UITextField *)uiView setClearButtonMode:UITextFieldViewModeNever];
-           // [(UIPickerView *)uiView setClearButtonMode:UITextFieldViewModeNever];
-         
-        // for (UIView *sub in uiView) {
-              //[self hideKeyboardShortcutBar:sub];
-         /*     if ([NSStringFromClass([uiView class]) isEqualToString:@"UIWebBrowserView"]) {
-                  Method method = class_getInstanceMethod(uiView.class, @selector(inputAccessoryView));
-                  IMP newImp = imp_implementationWithBlock(^(id _s) {
-                      if ([uiView respondsToSelector:@selector(inputAssistantItem)]) {
-                          UITextInputAssistantItem *inputAssistantItem = [uiView inputAssistantItem];
-                          inputAssistantItem.leadingBarButtonGroups = @[];
-                          inputAssistantItem.trailingBarButtonGroups = @[];
-                      }
-                      return nil;
-                  });
-                  method_setImplementation(method, newImp);
-              }*/
-        //  }
-         
-         
             return (UIPickerView*) uiView;
         }
  
@@ -505,8 +313,18 @@ static IMP WKOriginalImp;
     // The webview should always be able to return to full size
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
     if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
-        screen.size.height -= keyboardIntersection.size.height;
-        self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        // I'm sure there's a better way...
+        if (@available(iOS 12, *)) {
+            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView; // Order intentionally swapped.
+            screen.size.height -= keyboardIntersection.size.height;
+
+            CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height - keyboard.size.height);
+            self.webView.scrollView.contentSize = revisedSize;
+        }
+        else {
+            screen.size.height -= keyboardIntersection.size.height;
+            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        }
     }
 
     // A view's frame is in its superview's coordinate system so we need to convert again
@@ -515,7 +333,6 @@ static IMP WKOriginalImp;
     // I'm sure there's a better way...
     if (@available(iOS 12, *)) {
         CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height - keyboard.size.height);
-        //CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height + keyboard.size.height);
         self.webView.scrollView.contentSize = revisedSize;
     }
     */
