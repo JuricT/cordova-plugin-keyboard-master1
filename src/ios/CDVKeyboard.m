@@ -42,10 +42,10 @@
       CGRect screen = [[UIScreen mainScreen] bounds];
     //CGRect screen = [[[UIApplication sharedApplication] keyWindow] frame];
     CGRect statusBar = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect keyboard = ((NSValue*)notif.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
+   // CGRect keyboard = ((NSValue*)notif.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
 
     // Work within the webview's coordinate system
-    keyboard = [self.webView convertRect:keyboard fromView:nil];
+    CGRect keyboard = [self.webView convertRect:keyboard fromView:nil];
     statusBar = [self.webView convertRect:statusBar fromView:nil];
     screen = [self.webView convertRect:screen fromView:nil];
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
