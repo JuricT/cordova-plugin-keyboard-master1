@@ -138,7 +138,6 @@
                                                              usingBlock:^(NSNotification* notification) {
                                                                  [weakSelf performSelector:@selector(shrinkViewKeyboardWillChangeFrame:) withObject:notification afterDelay:0];
                                                                  CGRect screen = [[UIScreen mainScreen] bounds];
-                                                                 //CGRect screen = [[[UIApplication sharedApplication] keyWindow] frame];
                                                                  CGRect keyboard = ((NSValue*)notification.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
                                                                  CGRect intersection = CGRectIntersection(screen, keyboard);
                                                                  CGFloat height = MIN(intersection.size.width, intersection.size.height);
@@ -292,7 +291,6 @@ static IMP WKOriginalImp;
     self.webView.scrollView.scrollEnabled = YES;
 
     CGRect screen = [[UIScreen mainScreen] bounds];
-    //CGRect screen = [[[UIApplication sharedApplication] keyWindow] frame];
     CGRect statusBar = [[UIApplication sharedApplication] statusBarFrame];
     CGRect keyboard = ((NSValue*)notif.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
 
@@ -312,7 +310,7 @@ static IMP WKOriginalImp;
     // Note: we check for _shrinkView at this point instead of the beginning of the method to handle
     // the case where the user disabled shrinkView while the keyboard is showing.
     // The webview should always be able to return to full size
-    _shrinkView = YES;
+    //_shrinkView = YES;
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
     if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
         // I'm sure there's a better way...
@@ -331,8 +329,8 @@ static IMP WKOriginalImp;
         */
         screen.size.height -= keyboardIntersection.size.height;
         self.keyboardHeight = keyboardIntersection.size.height;
-        self.webView.scrollView.scrollEnabled = NO;
-        //self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        //self.webView.scrollView.scrollEnabled = NO;
+        self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
     }
 
     // A view's frame is in its superview's coordinate system so we need to convert again
