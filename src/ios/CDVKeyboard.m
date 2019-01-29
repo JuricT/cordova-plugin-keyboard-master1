@@ -361,6 +361,7 @@ static IMP WKOriginalImp;
       } else {
           CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
           [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+      }
     } 
 }
 
