@@ -38,14 +38,32 @@
 
 #pragma mark Initialize
 - (void)updateContent:(CDVInvokedUrlCommand *)command {
-      if (@available(iOS 12, *)) {
+ 
+      CGRect screen = [[UIScreen mainScreen] bounds];
+    //CGRect screen = [[[UIApplication sharedApplication] keyWindow] frame];
+    CGRect statusBar = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect keyboard = ((NSValue*)notif.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
+
+    // Work within the webview's coordinate system
+    keyboard = [self.webView convertRect:keyboard fromView:nil];
+    statusBar = [self.webView convertRect:statusBar fromView:nil];
+    screen = [self.webView convertRect:screen fromView:nil];
+    CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
+    if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
+        // I'm sure there's a better way...
+        if (@available(iOS 12, *)) {
             self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView; // Order intentionally swapped.
             screen.size.height -= keyboardIntersection.size.height;
 
             CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height - keyboard.size.height);
             //CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height + keyboard.size.height);
             self.webView.scrollView.contentSize = revisedSize;
-      }
+        }
+        else {
+            screen.size.height -= keyboardIntersection.size.height;
+            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        }
+    }
         
 }
 - (void)returnKeyType:(CDVInvokedUrlCommand *)command {
