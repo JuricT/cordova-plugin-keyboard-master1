@@ -376,9 +376,11 @@ static IMP WKOriginalImp;
     }
 
     self.shrinkView = [value boolValue];
-   // Scroll webview content to bottom
+      if (@available(iOS 12, *)) {
+        // Scroll webview content to bottom
         CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
         [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+      }
     }
  
  [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:self.shrinkView]
