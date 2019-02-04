@@ -355,8 +355,7 @@ static IMP WKOriginalImp;
     if (_shrinkView && _keyboardIsVisible) {
       if (@available(iOS 12, *)) { 
         CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
-        [self.webView.scrollView setContentOffset:bottomOffset animated:YES];
-       //[self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+        [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
       } else {
         // 
        CGFloat maxY = scrollView.contentSize.height - scrollView.bounds.size.height;
@@ -383,8 +382,7 @@ static IMP WKOriginalImp;
       if (@available(iOS 12, *)) {
         // Scroll webview content to bottom
         CGPoint bottomOffset = CGPointMake(0.0f, 0.0f);
-        [self.webView.scrollView setContentOffset:bottomOffset animated:YES];
-       //[self.webView.scrollView setContentOffset:bottomOffset animated:NO];
+        [self.webView.scrollView setContentOffset:bottomOffset animated:NO];
      }
 }
 
